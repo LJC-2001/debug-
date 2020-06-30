@@ -1,24 +1,28 @@
 #include <stdio.h>
 #include <string.h>
-int main() {
+
+int main() 
+{
     int i,j;
     char name[10][20]={0};
-    for(i = 0,j = 0; i < 10; i++){
-        scanf("%s",&name[i][j]);
+    char temp[20];
+    //intout
+    for (i = 0; i < 10; i++) {
+        scanf("%s",&name[i]);
     }
-    
-    for(i = 0,j = 0; i < 9; i++){
-        if(strcmp(&name[i][j],&name[i+1][j]) > 0){
-            char temp[10];
-            strcpy(temp,&name[i][j]);
-            strcpy(&name[i][j],&name[i+1][j]);
-            strcpy(&name[i+1][j],&temp);
+    //sort
+    for (j = 0; j < 9; j++) {
+    	for (i = 0; i < 9; i++) {
+            if (strcmp(name[i], name[i+1]) > 0) {
+                strcpy(temp, name[i]);
+                strcpy(name[i], name[i+1]);
+                strcpy(name[i+1], temp);
+            }
         }
     }
-
-    for(i = 0,j = 0; i < 10; i++){
-        printf("%s\n",&name[i][j]);
+	//output
+    for (i = 0; i < 10; i++) {
+        printf("%s\n",name[i]);
     }
-    
     return 0;
 }
