@@ -7,8 +7,10 @@ typedef struct node {
 
 Node *circle_create(int n);
 void count_off(Node *head, int n, int k, int m);
+void Destroy(Node * head);
 
-int main() {
+int main() 
+{
     int n, k, m;
     scanf("%d%d%d", &n, &k, &m);
     Node *head = circle_create(n);
@@ -16,16 +18,17 @@ int main() {
     return 0;
 }
 
-Node *circle_create(int n) {
+Node *circle_create(int n) 
+{
     Node *temp, *new_node, *head;
     int i;
 
-    // ´´½¨µÚÒ»¸öÁ´±í½Úµã²¢¼ÓÊý¾Ý
+    // ¿¿¿¿¿¿¿¿¿¿¿¿¿
     temp = (Node *) malloc(sizeof(Node));
     head = temp;
     head->data = 1;
 
-    // ´´½¨µÚ 2 µ½µÚ n ¸öÁ´±í½Úµã²¢¼ÓÊý¾Ý
+    // ¿¿¿ 2 ¿¿ n ¿¿¿¿¿¿¿¿¿
     for(i = 2; i <= n; i++) {
         new_node = (Node *) malloc(sizeof(Node));
         new_node->data = i;
@@ -33,33 +36,65 @@ Node *circle_create(int n) {
         temp = new_node;
     }
 
-    // ×îºóÒ»¸ö½ÚµãÖ¸ÏòÍ·²¿¹¹³ÉÑ­»·Á´±í
+    // ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
     temp->next = head;
 
     return head;
 }
 
-void count_off(Node *head, int n, int k, int m) {
-    Node *p=head;
+void count_off(Node *head, int n, int k, int m) 
+{
+    Node *p = head;
     Node *q;
-    if(p!=NULL){
-    	while(p->data!=k){
-        	p=p->next;
-        }
-        while(p!=p->next){
-            int j=1;
-            while(j<m-1){
-            	p=p->next;
-            	++j;
-			}
-            q=p->next;
-            printf("%d ",q->data);
-            p->next=q->next;
-            free(q);
-            q=NULL;
+    if (p != NULL) {
+    	while (p->data != k) {   //¿k¿¿¿¿ 
             p=p->next;
         }
-        printf("%d",p->data);
+        if (m != 1) {
+            while (p != p->next) {
+        	int j = 1;
+                while (j < m-1) {
+                    p = p->next;
+            	    j++;
+		}
+                q = p->next;
+                printf("%d ", q->data);
+                p->next = q->next;
+                free(q);
+                q = NULL;
+                p = p->next;	          
+            }
+            printf("%d", p->data);
+            free(p);
+	} else {
+	    int j;
+	    for (j = 0; j < n; j++) {
+		printf("%d ", p->data );
+		p = p->next ;
+	    }
+	    Destroy(head);
+	}    
     }
-    return;
+    return 0;
+}
+
+void Destroy(Node *head) 
+{
+	Node *p, *pre;
+	if (head == NULL) {
+	    return;
+	}
+	pre = head->next;
+	if (pre == head) {  //¿¿¿¿¿¿ 
+	    free(head);
+	} else {
+	    p = pre->next;
+	    while (p != head) {
+	        free(pre);
+		pre = p;
+		p = p->next; 
+	    } 
+	    free(pre);
+	    free(head);
+	}			
 }

@@ -8,7 +8,8 @@ typedef struct node {
 Node *circle_create(int n);
 void count_off(Node *head, int n, int k, int m);
 
-int main() {
+int main() 
+{	
     int n, k, m;
     scanf("%d%d%d", &n, &k, &m);
     Node *head = circle_create(n);
@@ -16,16 +17,17 @@ int main() {
     return 0;
 }
 
-Node *circle_create(int n) {
+Node *circle_create(int n) 
+{
     Node *temp, *new_node, *head;
     int i;
 
-    // ´´½¨µÚÒ»¸öÁ´±í½Úµã²¢¼ÓÊý¾Ý
+    // ¿¿¿¿¿¿¿¿¿¿¿¿¿
     temp = (Node *) malloc(sizeof(Node));
     head = temp;
     head->data = 1;
 
-    // ´´½¨µÚ 2 µ½µÚ n ¸öÁ´±í½Úµã²¢¼ÓÊý¾Ý
+    // ¿¿¿ 2 ¿¿ n ¿¿¿¿¿¿¿¿¿
     for(i = 2; i <= n; i++) {
         new_node = (Node *) malloc(sizeof(Node));
         new_node->data = i;
@@ -33,47 +35,52 @@ Node *circle_create(int n) {
         temp = new_node;
     }
 
-    // ×îºóÒ»¸ö½ÚµãÖ¸ÏòÍ·²¿¹¹³ÉÑ­»·Á´±í
+    // ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
     temp->next = head;
 
     return head;
 }
 
-void count_off(Node *head, int n, int k, int m) {
-   Node *temp, *pre;
+void count_off(Node *head, int n, int k, int m) 
+{
+    Node *temp, *pre, *p;
     int i;
     int times;
-    times = 1;
     temp = head;
     pre = head;
     
-    for(i = 1; i < k - 1 ; i++){
-        pre = pre->next;
-    }
-    
-    for(i = 1; i < k; i++){
+    for (i = 1; i < k; i++) {
         pre = temp;
         temp = temp->next;
-    }
-
-    i = 1;
+    }    
+    if (k == 1 && m == 1) {
+	for (i = 0; i < n; i++) {
+	    printf("%d ", temp->data);
+	    p = temp;
+	    temp = temp->next;
+	    free(p); 
+	}
+    } else {
+	i = 1;
+	times = 1;
+	while (times <= n) {
+            if (i == m) {
+            	printf("%d", temp->data);
+        	times++;
+        	p = temp;
+        	pre->next = p->next;
+        	temp = pre;
+        	free(p);
+        	i = 0;
+        	if (times != n + 1) {
+            	    printf(" ");
+         	}
+            }
+            pre = temp;
+            temp = temp->next;
+            i++;
+    	}
+    } 
     
-    while(times <= n){
-      if(i == m){
-        printf("%d", temp->data);
-        times++;
-        pre->next = pre->next->next;
-        temp = pre;
-        i = 1;
-         if(times != 1){
-             printf(" ");
-         }
-    }
-        pre = temp;
-        temp = temp->next;
-        i++;
-    }
-    
-    
-    return;
+    return 0;
 }
