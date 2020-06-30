@@ -24,6 +24,7 @@ int main()
         numbers[i] = numbers[max];
         numbers[max] = inter;
     }
+
     //output
     for (i = 0; i <= 9; i++) {
         printf("%d", numbers[i]);
@@ -34,3 +35,4 @@ int main()
 
     return 0;
 }
+
